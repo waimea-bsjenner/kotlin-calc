@@ -2,44 +2,58 @@ import kotlin.math.pow
 
 fun main() {
     println("Welcome to the Ben-culator, a lovely calculator for all of your calculating purposes and needs.")
-    var float1 = getFloat("Enter the first number  ")
+    var double1 = getDouble("Enter the first number  ")
     var operator: Char
     while (true) {
         operator = getString("enter an operator (+, -, /, *, ^, !) ").first()
         if  ("+-*/^!".contains(operator)) break
     }
     if (operator == '!')  {
-        var factorial: Float
-        while (float1 > 1) {
-            factorial = (float1 * (float1--))
-            float1--
+        var factorial = 1.0
+        while (double1 > 1) {
+            factorial *= double1
+            double1--
         }
-        println("$float1! = $factorial")
+        println("$double1! = $factorial")
     }
     else {
-        val float2 = getFloat("Enter the second number ")
-        if (operator == '+') {
-            val result = float1 + float2
-            println("$float1 + $float2 = $result")
+        val double2 = getDouble("Enter the second number ")
+        var result = 0.0
+        if (double1 == 0.0 && double2 == 0.0 && operator == '^') {
+            println("0 ^ 0 = 0 you muffin")
         }
-        if (operator == '-') {
-            val result = float1 - float2
-            println("$float1 - $float2 = $result")
-        }
-        if (operator == '*') {
-            val result = float1 * float2
-            println("$float1 x $float2 = $result")
-        }
-        if (operator == '/') {
-            val result = float1 / float2
-            println("$float1 / $float2 = $result")
-        }
-        if (operator == '^') {
-            val result = float1.toDouble().pow(float2.toDouble())
-            println("$float1 ^ $float2 = $result")
+
+//        if (operator == '+') {
+//            result = double1 + double2
+//        }
+//        else if (operator == '-') {
+//            result = double1 - double2
+//        }
+//        else if (operator == '*') {
+//            result = double1 * double2
+//        }
+//        else if (operator == '/') {
+//            result = double1 / double2
+//        }
+//        else if (operator == '^') {
+//            result = double1.toDouble().pow(double2.toDouble())
+//        }
+//        else {
+//            result = 0.0
+//        }
+
+        else {
+            result = when (operator) {
+                '+' -> double1 + double2
+                '-' -> double1 - double2
+                '*' -> double1 * double2
+                '/' -> double1 / double2
+                '^' -> double1.pow(double2)
+                else -> 0.0
+            }
+            println("$double1 $operator $double2 = $result")
         }
     }
-
 }
 
 fun getString(prompt: String): String {
@@ -54,14 +68,14 @@ fun getString(prompt: String): String {
     return userInput
 }
 
-fun getFloat(prompt: String): Float {
-    var floatValue: Float?
+fun getDouble(prompt: String): Double {
+    var doubleValue: Double?
 
      while (true) {
         val userInput = getString(prompt)
-        floatValue = userInput.toFloatOrNull()
-        if (floatValue != null) break
+        doubleValue = userInput.toDoubleOrNull()
+        if (doubleValue != null) break
     }
 
-    return floatValue!!
+    return doubleValue!!
 }
